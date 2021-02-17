@@ -83,20 +83,58 @@ const child = document.querySelector(".child")
 // #############################################################
 
 // To run an event as many times as you want .. and then remove it
-grandparent.addEventListener("click", e => {
-    console.log("Grandparent Bubble")
-})
+// grandparent.addEventListener("click", e => {
+//     console.log("Grandparent Bubble")
+// })
 
-parent.addEventListener("click", printHi)
+// parent.addEventListener("click", printHi)
 
-setTimeout(() => {
-    parent.removeEventListener("click", printHi)
-}, 2000)
+// setTimeout(() => {
+//     parent.removeEventListener("click", printHi)
+// }, 2000)
 
-child.addEventListener("click", e => {
-    console.log("Child Bubble")
-})
+// child.addEventListener("click", e => {
+//     console.log("Child Bubble")
+// })
 
-function printHi() {
+// function printHi() {
+//     console.log("Hi")
+// }
+
+//#################################################################
+
+// #### To delegate events
+const divs = document.querySelectorAll('div')
+
+// #### This creates an event listener for all the divs on the html page
+// #### However, for the <div> created, it will not listen for it; because the <div> created is AFTER this ling of code. (See alternate solution below)
+// divs.forEach(div => {
+//     div.addEventListener("click", () => {
+//         console.log("Hi")
+//     })
+// })
+
+// #### Alternate solution for ALL <divs> to have event listeners
+// document.addEventListener("click", e => {
+//     if (e.target.matches(("div")) {
+//         console.log("Hi")
+//     }
+// })
+
+// Below a BETTER WAY to write the alternate solution for have an event listener on all divs
+addGlobalEventListener("click", "div", e => {
     console.log("Hi")
+})
+
+function addGlobalEventListener(type, selector, callback) {
+    document.addEventListener(type, e => {
+        if (e.target.matches(selector)) callback(e)
+    })
 }
+
+// This creates and adds a new <div> to the html page
+const newDiv = document.createElement("div")
+newDiv.style.width = "200px"
+newDiv.style.height = "200px"
+newDiv.style.backgroundColor = "purple"
+document.body.append(newDiv)
