@@ -68,18 +68,35 @@ const child = document.querySelector(".child")
 // ############################################################
 
 // To run an event only once add the { once: true }
+// grandparent.addEventListener("click", e => {
+//     console.log("Grandparent Bubble")
+// })
+
+// parent.addEventListener("click", e => {
+//     console.log("Parent Bubble")
+// }, { once: true })
+
+// child.addEventListener("click", e => {
+//     console.log("Child Bubble")
+// })
+
+// #############################################################
+
+// To run an event as many times as you want .. and then remove it
 grandparent.addEventListener("click", e => {
     console.log("Grandparent Bubble")
 })
 
-parent.addEventListener("click", e => {
-    console.log("Parent Bubble")
-}, { once: true })
+parent.addEventListener("click", printHi)
+
+setTimeout(() => {
+    parent.removeEventListener("click", printHi)
+}, 2000)
 
 child.addEventListener("click", e => {
     console.log("Child Bubble")
 })
 
-// #############################################################
-
-// To run an event as many times as you want .. and then remove it
+function printHi() {
+    console.log("Hi")
+}
